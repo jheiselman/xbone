@@ -1,3 +1,5 @@
+// Package provides the functionality to remotely turn on an
+// Xbox One on the same network
 package xbone
 
 import (
@@ -7,20 +9,25 @@ import (
 	"time"
 )
 
-// Xbox - An Xbox object
+// Xbox is an object that represents an Xbox One
+// on the same network. It is identified by the IP address
+// and the Live ID.
 type Xbox struct {
 	IP     string
 	LiveID string
 	Debug  bool
 }
 
+// This is necessary as a rudimentary checksum
 func getHexLength(payload []byte) byte {
 	length := len(payload)
 	b := byte(length)
 	return b
 }
 
-// TurnOn - Sends a request to turn on the Xbox
+// TurnOn sends a request to turn on the Xbox.
+// It is requires that the Xbox object has both the IP and LiveID
+// properties set.
 func (xbox *Xbox) TurnOn() error {
 	dest, err := net.ResolveUDPAddr("udp", xbox.IP+":5050")
 	if err != nil {
