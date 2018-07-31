@@ -10,19 +10,16 @@ import (
 
 func main() {
 	var xboxIP = flag.String("hostname", "XboxOne", "Hostname or IP address of Xbox")
-	var xboxLiveID = flag.String("liveid", "", "Xbox Live ID")
+	var xboxLiveID = flag.String("liveid", os.Getenv("XBOX_LIVE_ID"), "Xbox Live ID")
+        var debug = flag.Bool("debug", false, "Turn on debug output")
 	flag.Parse()
 
-	if *xboxLiveID == "" && os.Getenv("XBOX_LIVE_ID") != "" {
-		*xboxLiveID = os.Getenv("XBOX_LIVE_ID")
-	}
-
 	if *xboxLiveID == "" {
-		fmt.Printf("You must pass -liveid option or set XBOX_LIVE_ID environment variable")
+		fmt.Println("You must pass -liveid option or set XBOX_LIVE_ID environment variable")
 		return
 	}
 
-	xbox := &xbone.Xbox{IP: *xboxIP, LiveID: *xboxLiveID, Debug: true}
+	xbox := &xbone.Xbox{IP: *xboxIP, LiveID: *xboxLiveID, Debug: *debug}
 	if err := xbox.TurnOn(); err != nil {
 		fmt.Printf("Failed to turn on Xbox: %v\n", err)
 	} else {
