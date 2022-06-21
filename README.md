@@ -1,4 +1,7 @@
 # xbone
+
+## DEPRECATED: This library is not under active development. Check out the [OpenXbox group's efforts](https://github.com/OpenXbox) for up-to-date work and far more functionality!
+
 Library for controlling an Xbox One
 
 This library (and associated command) will send a command to an Xbox One over the local network to wake it up. To make use of it:
